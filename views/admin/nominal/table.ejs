@@ -1,0 +1,33 @@
+<table id="example2" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Nama Coin</th>
+      <th>Jumlah Coin</th>
+      <th>Harga Koin</th>
+      <th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for( let i = 0; i < nominal.length; i++ ) { %>
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= nominal[i].coinName %></td>
+      <td><%= nominal[i].coinQuantity %></td>
+      <td><%= nominal[i].price %></td>
+      <td>
+        <form method="POST" action="/nominal/delete/<%= nominal[i]._id %>?_method=DELETE">
+          <a href="/nominal/edit/<%= nominal[i]._id %>" class="btn btn-warning">
+            <i class="fas fa-pencil-alt"></i>
+            Ubah</a
+          >
+          <button class="btn btn-danger">
+            <i class="fas fa-trash"> </i>
+            Hapus
+          </button>
+        </form>
+      </td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
