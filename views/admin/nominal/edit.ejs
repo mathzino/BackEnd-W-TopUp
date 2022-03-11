@@ -32,12 +32,12 @@
             <!-- /.card-header -->
             <!-- form start -->
 
-            <form action="/nominal/create" method="POST">
+            <form action="/nominal/edit/<%=nominal.id%>?_method=PUT" method="POST">
               <div class="card-body">
                 <div class="form-group">
                   <label>Nama Koin</label>
                   <select class="form-control select2" style="width: 100%" name="coinName" required>
-                    <option selected="selected">Pilih Koin</option>
+                    <option selected="selected"><%= nominal.coinName %></option>
                     <option value="Diamond">Diamond</option>
                     <option value="Gold">Gold</option>
                     <option value="Jewel">Jewel</option>
@@ -45,11 +45,11 @@
                 </div>
                 <div class="form-group">
                   <label for="coinQuantity">Jumlah Coin</label>
-                  <input type="number" class="form-control" name="coinQuantity" id="coinQuantity" placeholder="Masukkan Jumlah Coin" />
+                  <input type="number" value="<%= nominal.coinQuantity %>" class="form-control" name="coinQuantity" id="coinQuantity" placeholder="Masukkan Jumlah Coin" />
                 </div>
                 <div class="form-group">
                   <label for="price">Harga</label>
-                  <input type="number" class="form-control" name="price" id="price" placeholder="Masukkan Harga" />
+                  <input type="number" value="<%= nominal.price %>" class="form-control" name="price" id="price" placeholder="Masukkan Harga" />
                 </div>
               </div>
 
