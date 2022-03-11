@@ -4,7 +4,6 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
-      <%- include ../../partials/message.ejs %> <% setTimeout(()=> { %> console.log('yahalo') <% }, 5000); %>
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Category</h1>
@@ -12,7 +11,8 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">Category</li>
+            <li class="breadcrumb-item"><a href="/category"> Category </a></li>
+            <li class="breadcrumb-item active">Edit</li>
           </ol>
         </div>
       </div>
@@ -25,15 +25,24 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div class="card">
+          <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">
-                <a href="/category/create" class="btn btn-primary"><i class="nav-icon far fa-plus-square"></i> Tambah </a>
-              </h3>
+              <h3 class="card-title">Form Edit Kaategori</h3>
             </div>
             <!-- /.card-header -->
-            <div class="card-body"><%- include ./table.ejs %></div>
-            <!-- /.card-body -->
+            <!-- form start -->
+            <form method="POST" action="/category/edit/<%= category._id %>?_method=PUT">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="name">Nama Kategori</label>
+                  <input type="text" value="<%= category.name %> " class="form-control" name="name" id="exampleInputEmail1" placeholder="Masukkan Nama Kategori" />
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
           </div>
           <!-- /.card -->
 
