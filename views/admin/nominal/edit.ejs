@@ -37,10 +37,17 @@
                 <div class="form-group">
                   <label>Nama Koin</label>
                   <select class="form-control select2" style="width: 100%" name="coinName" required>
-                    <option selected="selected"><%= nominal.coinName %></option>
-                    <option value="Diamond">Diamond</option>
-                    <option value="Gold">Gold</option>
-                    <option value="Jewel">Jewel</option>
+                    <option selected="selected" disabled>Pilih Koin</option>
+                    <option value ="Diamond"
+                    <% if (nominal.coinName=="Diamond") { %>
+                     selected
+                    <% } %>>Diamond</option>
+                    <option value="Gold" <% if (nominal.coinName=="Gold") { %>
+                      selected
+                     <% } %>>Gold</option>
+                    <option value="Jewel" <% if (nominal.coinName=="Jewel") { %>
+                      selected
+                     <% } %>>Jewel</option>
                   </select>
                 </div>
                 <div class="form-group">

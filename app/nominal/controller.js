@@ -66,17 +66,17 @@ module.exports = {
       res.redirect("/nominal");
     }
   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       let { id } = req.params;
-  //       await Category.findOneAndDelete({ _id: id });
-  //       req.flash("alertMessage", "Berhasil Delete Kategori");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/category");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", `danger`);
-  //       res.redirect("/category");
-  //     }
-  //   },
+  actionDelete: async (req, res) => {
+    try {
+      let { id } = req.params;
+      await Nominal.findOneAndDelete({ _id: id });
+      req.flash("alertMessage", "Berhasil Delete Data Nominal");
+      req.flash("alertStatus", "success");
+      res.redirect("/nominal");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/nominal");
+    }
+  },
 };
