@@ -1,6 +1,6 @@
 let mongoose = require("mongoose");
 let nominalSchema = mongoose.Schema({
-  coinQuantuty: {
+  coinQuantity: {
     type: Number,
     default: 0,
   },
