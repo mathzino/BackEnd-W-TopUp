@@ -13,10 +13,19 @@ let voucherSchema = mongoose.Schema({
     type: String,
   },
   category: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
   },
-  nominals: [{}],
+  nominals: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Nominal",
+    },
+  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
   price: {
     type: Number,
     default: 0,
