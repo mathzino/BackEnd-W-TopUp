@@ -35,7 +35,7 @@
             <form action="/nominal/create" method="POST">
               <div class="card-body">
                 <div class="form-group">
-                  <label for="name">Jumlah Coin</label>
+                  <label for="name">Nama Game</label>
                   <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Jumlah Coin" />
                 </div>
                 <div class="form-group">
@@ -63,7 +63,11 @@
                   <input type="number" class="form-control" name="price" id="price" placeholder="Masukkan Harga" />
                 </div>
               </div>
-
+              <div class="form-group">
+                <label for="image">Gambar </label>
+                <input type="file" class="form-control" name="image" id="image" placeholder="Masukkan Jumlah Coin" />
+              </div>
+              <img id="preview" />
               <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Save</button>
               </div>
@@ -83,3 +87,22 @@
 </div>
 
 <%- include ../../partials/footer.ejs %> <%- include ../../partials/js.ejs %>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        $("#preview").attr("src", e.target.result);
+        $("#preview").attr("width", "50%");
+        $("#preview").attr("height", "50%");
+      };
+      reader.readAsDataURt(input.files[0]);
+    }
+  }
+  $("#image").change(function () {
+    readURL(this);
+    console.log("hai");
+  });
+</script>
