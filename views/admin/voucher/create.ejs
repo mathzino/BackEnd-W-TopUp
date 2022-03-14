@@ -6,12 +6,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Nominal</h1>
+          <h1>Voucher</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/nominal"> Nominal </a></li>
+            <li class="breadcrumb-item"><a href="/voucher"> Voucher </a></li>
             <li class="breadcrumb-item active">Create</li>
           </ol>
         </div>
@@ -27,16 +27,16 @@
         <div class="col-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Form Tambah Nominal</h3>
+              <h3 class="card-title">Form Tambah Voucher</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
 
-            <form action="/nominal/create" method="POST">
+            <form action="/voucher/create" method="POST" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="form-group">
                   <label for="name">Nama Game</label>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Jumlah Coin" />
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama Game" />
                 </div>
                 <div class="form-group">
                   <label>Kategori</label>
@@ -50,22 +50,17 @@
                 <div class="form-group">
                   <label>Nominal</label>
                   <div class="select2-purple">
-                    <select class="form-control select2" multiple="multiple" style="width: 100%" name="nominal" required data-placeholder="pilih jenis nominal">
+                    <select class="form-control select2" multiple="multiple" style="width: 100%" name="nominals" required data-placeholder="pilih jenis nominal">
                       <% nominal.forEach(nominal => { %>
                       <option value="<%= nominal._id%>"><%= nominal.coinName %> <%= nominal.price %></option>
                       <% }) %>
                     </select>
                   </div>
                 </div>
-
                 <div class="form-group">
-                  <label for="price">Harga</label>
-                  <input type="number" class="form-control" name="price" id="price" placeholder="Masukkan Harga" />
+                  <label for="image">Gambar </label>
+                  <input type="file" class="form-control" name="image" id="image" placeholder="Masukkan Jumlah Coin" />
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="image">Gambar </label>
-                <input type="file" class="form-control" name="image" id="image" placeholder="Masukkan Jumlah Coin" />
               </div>
               <img id="preview" />
               <div class="card-footer">
@@ -87,7 +82,6 @@
 </div>
 
 <%- include ../../partials/footer.ejs %> <%- include ../../partials/js.ejs %>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script>
   function readURL(input) {
     if (input.files && input.files[0]) {
@@ -98,7 +92,7 @@
         $("#preview").attr("width", "50%");
         $("#preview").attr("height", "50%");
       };
-      reader.readAsDataURt(input.files[0]);
+      reader.readAsDataURL(input.files[0]);
     }
   }
   $("#image").change(function () {

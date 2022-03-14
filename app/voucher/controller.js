@@ -1,6 +1,9 @@
 const Voucher = require("./model");
 const Category = require("../category/model");
 const Nominal = require("../nominal/model");
+const path = require("path");
+const fs = require("fs");
+const config = require("../../config");
 module.exports = {
   index: async (req, res) => {
     try {
@@ -27,21 +30,56 @@ module.exports = {
       res.redirect("/voucher");
     }
   },
-  //   actionCreate: async (req, res) => {
-  //     try {
-  //       const { coinQuantity, price, coinName } = req.body;
-  //       let nominal = await Nominal({ coinQuantity, price, coinName });
-  //       await nominal.save();
-  //       req.flash("alertMessage", "Berhasil Tambah Kategori");
-  //       req.flash("alertStatus", "success");
+  actionCreate: async (req, res) => {
+    try {
+      const { name, category, nominals } = req.body;
+      if (req.file) {
+        console.log(req.file);
+        let tmp_path = req.file.path;
+        let originaExt = req.file.originalname.split(".")[req.file.originalname.split(".").length - 1];
+        let fileName = req.file.filename + "." + originaExt;
+        let target_path = path.resolve(config.rootPath, `public/uploads/${fileName}`);
 
-  //       res.redirect("/nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", `danger`);
-  //       res.redirect("/nominal");
-  //     }
-  //   },
+        const src = fs.createReadStream(tmp_path);
+        const dest = fs.createWriteStream(target_path);
+        console.log("dest: ", dest);
+        src.pipe(dest);
+
+        src.on("end", async () => {
+          try {
+            console.log("src:", src);
+            const voucher = new Voucher({
+              name,
+              category,
+              nominals,
+              thumbnail: fileName,
+            });
+            await voucher.save();
+            req.flash("alertMessage", "Berhasil Tambah Voucher");
+            req.flash("alertStatus", "success");
+
+            res.redirect("/voucher");
+          } catch (error) {
+            console.log(error);
+            req.flash("alertMessage", `${error.message}`);
+            req.flash("alertStatus", `danger`);
+            res.redirect("/voucher");
+          }
+        });
+      } else {
+        const voucher = new Voucher({
+          name,
+          category,
+          nominals,
+        });
+        await voucher.save();
+      }
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/voucher");
+    }
+  },
 
   //   viewEdit: async (req, res) => {
   //     try {
