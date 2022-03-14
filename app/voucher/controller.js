@@ -73,6 +73,10 @@ module.exports = {
           nominals,
         });
         await voucher.save();
+        req.flash("alertMessage", "Berhasil Tambah Voucher");
+        req.flash("alertStatus", "success");
+
+        res.redirect("/voucher");
       }
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
@@ -81,33 +85,91 @@ module.exports = {
     }
   },
 
-  //   viewEdit: async (req, res) => {
-  //     try {
-  //       let { id } = req.params;
+  viewEdit: async (req, res) => {
+    try {
+      let { id } = req.params;
+      const category = await Category.find();
+      const nominal = await Nominal.find();
+      let voucher = await Voucher.findOne({ _id: id }).populate("nominals").populate("category");
 
-  //       let nominal = await Nominal.findOne({ _id: id });
+      res.render("admin/voucher/edit", { voucher, nominal, category });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/nominal");
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      const { name, category, nominals } = req.body;
+      const { id } = req.params;
+      if (req.file) {
+        console.log(req.file);
+        let tmp_path = req.file.path;
+        let originaExt = req.file.originalname.split(".")[req.file.originalname.split(".").length - 1];
+        let fileName = req.file.filename + "." + originaExt;
+        let target_path = path.resolve(config.rootPath, `public/uploads/${fileName}`);
 
-  //       res.render("admin/nominal/edit", { nominal });
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", `danger`);
-  //       res.redirect("/nominal");
-  //     }
-  //   },
-  //   actionEdit: async (req, res) => {
-  //     try {
-  //       let { id } = req.params;
-  //       let { coinQuantity, price, coinName } = req.body;
-  //       await Nominal.findOneAndUpdate({ _id: id }, { coinQuantity, price, coinName });
-  //       req.flash("alertMessage", "Berhasil Ubah Data Coin");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", `danger`);
-  //       res.redirect("/nominal");
-  //     }
-  //   },
+        const src = fs.createReadStream(tmp_path);
+        const dest = fs.createWriteStream(target_path);
+
+        src.pipe(dest);
+
+        src.on("end", async () => {
+          try {
+            const voucher = await Voucher.findOne({ _id: id });
+
+            let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
+            if (fs.existsSync(currentImage)) {
+              fs.unlinkSync(currentImage);
+            }
+
+            await Voucher.findByIdAndUpdate(
+              {
+                _id: id,
+              },
+              {
+                name,
+                category,
+                nominals,
+                thumbnail: fileName,
+              }
+            );
+
+            req.flash("alertMessage", "Berhasil Ubah Voucher");
+            req.flash("alertStatus", "success");
+
+            res.redirect("/voucher");
+          } catch (error) {
+            console.log(error);
+            req.flash("alertMessage", `${error.message}`);
+            req.flash("alertStatus", `danger`);
+            res.redirect("/voucher");
+          }
+        });
+      } else {
+        await Voucher.findByIdAndUpdate(
+          {
+            _id: id,
+          },
+          {
+            name,
+            category,
+            nominals,
+          }
+        );
+
+        req.flash("alertMessage", "Berhasil Ubah Voucher");
+        req.flash("alertStatus", "success");
+
+        res.redirect("/voucher");
+      }
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/voucher");
+    }
+  },
   //   actionDelete: async (req, res) => {
   //     try {
   //       let { id } = req.params;
