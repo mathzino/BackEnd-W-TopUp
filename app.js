@@ -38,6 +38,7 @@ app.use("/", dashboardRouter);
 app.use("/category", categoryRouter);
 app.use("/nominal", nominalRouter);
 app.use("/voucher", voucherRouter);
+console.log(`http://localhost:${8000}`);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

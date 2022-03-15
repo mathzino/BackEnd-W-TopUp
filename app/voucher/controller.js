@@ -170,17 +170,21 @@ module.exports = {
       res.redirect("/voucher");
     }
   },
-  //   actionDelete: async (req, res) => {
-  //     try {
-  //       let { id } = req.params;
-  //       await Nominal.findOneAndDelete({ _id: id });
-  //       req.flash("alertMessage", "Berhasil Delete Data Nominal");
-  //       req.flash("alertStatus", "success");
-  //       res.redirect("/nominal");
-  //     } catch (error) {
-  //       req.flash("alertMessage", `${error.message}`);
-  //       req.flash("alertStatus", `danger`);
-  //       res.redirect("/nominal");
-  //     }
-  //   },
+  actionDelete: async (req, res) => {
+    try {
+      let { id } = req.params;
+      let voucher = await Voucher.findOneAndDelete({ _id: id });
+      let currentImage = `${config.rootPath}/public/uploads/${voucher.thumbnail}`;
+      if (fs.existsSync(currentImage)) {
+        fs.unlinkSync(currentImage);
+      }
+      req.flash("alertMessage", "Berhasil Delete Voucher");
+      req.flash("alertStatus", "success");
+      res.redirect("/voucher");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/voucher");
+    }
+  },
 };

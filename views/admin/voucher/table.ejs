@@ -28,23 +28,19 @@
         <% } %>
       </td>
       <td>
-        <form action="" style="display: inline-block;">
+        <form action="" style="display: inline-block">
           <button class="btn btn-primary btn-sm">
-           <i class="fas fa-folder"></i>
-              <% if(voucher [i].status === 'Y') { %>
-                Matikan
-             <%   } else { %>
-                Hidupkan
-             <% } %> 
+            <i class="fas fa-folder"></i>
+            <% if(voucher [i].status === 'Y') { %> Matikan <% } else { %> Hidupkan <% } %>
           </button>
         </form>
         <a href="/voucher/edit/<%= voucher[i]._id %>" class="btn btn-info btn-sm">
-         <i class="fas fa-pencil-alt"></i>
+          <i class="fas fa-pencil-alt"></i>
           Ubah
         </a>
-        <form style="display: inline-block;" action="/voucher/delete/<%= voucher[i]._id%>?_method=DELETE"
+        <form method="POST" style="display: inline-block" action="/voucher/delete/<%= voucher[i]._id%>?_method=DELETE">
           <button class="btn btn-danger btn-sm">
-           <i class="fas fa-trash"></i>
+            <i class="fas fa-trash"></i>
             Наpus
           </button>
         </form>
