@@ -1,0 +1,69 @@
+<%- include ../../partials/header.ejs %>; <%- include ../../partials/navbar.ejs %>; <%- include ../../partials/sidebar.ejs %>;
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Bank</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/bank"> Bank </a></li>
+            <li class="breadcrumb-item active">Create</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Form Tambah Bank</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <form action="/bank/edit/<%=bank.id%>?_method=PUT" method="POST">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="name">Nama Pemilik</label>
+                  <input type="text" value="<%= bank.name %>" class="form-control" name="name" id="name" placeholder="Masukkan Jumlah Coin" />
+                </div>
+                <div class="form-group">
+                  <label for="nameBank">Nama Bank</label>
+                  <input type="text" value="<%= bank.nameBank %>" class="form-control" name="nameBank" id="nameBank" placeholder="Masukkan Jumlah Coin" />
+                </div>
+                <div class="form-group">
+                  <label for="noRekening">Jumlah Coin</label>
+                  <input type="text" value="<%= bank.noRekening %>" class="form-control" name="noRekening" id="noRekening" placeholder="Masukkan Jumlah Coin" />
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+<%- include ../../partials/footer.ejs %> <%- include ../../partials/js.ejs %>
