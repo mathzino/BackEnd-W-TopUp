@@ -41,44 +41,65 @@ module.exports = {
     }
   },
 
-  // viewEdit: async (req, res) => {
-  //   try {
-  //     let { id } = req.params;
+  viewEdit: async (req, res) => {
+    try {
+      let { id } = req.params;
+      let banks = await Bank.find();
+      let payment = await Payment.findOne({ _id: id }).populate("banks");
 
-  //     let nominal = await Nominal.findOne({ _id: id });
+      res.render("admin/payment/edit", { payment, banks });
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/payment");
+    }
+  },
+  actionEdit: async (req, res) => {
+    try {
+      let { id } = req.params;
+      let { banks, type } = req.body;
+      await Payment.findOneAndUpdate({ _id: id }, { banks, type });
+      req.flash("alertMessage", "Berhasil Ubah Data Payment");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/payment");
+    }
+  },
+  actionDelete: async (req, res) => {
+    try {
+      let { id } = req.params;
+      await Payment.findOneAndDelete({ _id: id });
+      req.flash("alertMessage", "Berhasil Delete Data Payment");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/payment");
+    }
+  },
 
-  //     res.render("admin/nominal/edit", { nominal });
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", `danger`);
-  //     res.redirect("/nominal");
-  //   }
-  // },
-  // actionEdit: async (req, res) => {
-  //   try {
-  //     let { id } = req.params;
-  //     let { coinQuantity, price, coinName } = req.body;
-  //     await Nominal.findOneAndUpdate({ _id: id }, { coinQuantity, price, coinName });
-  //     req.flash("alertMessage", "Berhasil Ubah Data Coin");
-  //     req.flash("alertStatus", "success");
-  //     res.redirect("/nominal");
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", `danger`);
-  //     res.redirect("/nominal");
-  //   }
-  // },
-  // actionDelete: async (req, res) => {
-  //   try {
-  //     let { id } = req.params;
-  //     await Nominal.findOneAndDelete({ _id: id });
-  //     req.flash("alertMessage", "Berhasil Delete Data Nominal");
-  //     req.flash("alertStatus", "success");
-  //     res.redirect("/nominal");
-  //   } catch (error) {
-  //     req.flash("alertMessage", `${error.message}`);
-  //     req.flash("alertStatus", `danger`);
-  //     res.redirect("/nominal");
-  //   }
-  // },
+  actionStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let payment = await Payment.findOne({ _id: id });
+      let status = payment.status === "Y" ? "N" : "Y";
+      payment = await Payment.findOneAndUpdate(
+        {
+          _id: id,
+        },
+        { status }
+      );
+      req.flash("alertMessage", "Berhasil ubah status");
+      req.flash("alertStatus", "success");
+      res.redirect("/payment");
+    } catch (error) {
+      req.flash("alertMessage", `${error.message}`);
+      req.flash("alertStatus", `danger`);
+      res.redirect("/payment");
+    }
+  },
 };

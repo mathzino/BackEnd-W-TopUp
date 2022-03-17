@@ -26,7 +26,13 @@
         <% } %>
       </td>
       <td>
-        <form method="POST" action="/payment/delete/<%= payment[i]._id %>?_method=DELETE">
+        <form method="POST" action="/payment/edit/status/<%=payment[i]._id%>?_method=PUT" style="display: inline-block">
+          <button class="btn btn-primary">
+            <i class="fas fa-folder"></i>
+            <% if(payment[i].status === 'Y') { %> Matikan <% } else { %> Hidupkan <% } %>
+          </button>
+        </form>
+        <form style="display: inline-block" method="POST" action="/payment/delete/<%= payment[i]._id %>?_method=DELETE">
           <a href="/payment/edit/<%= payment[i]._id %>" class="btn btn-info">
             <i class="fas fa-pencil-alt"></i>
             Ubah</a
