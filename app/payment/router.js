@@ -1,7 +1,9 @@
 var express = require("express");
 var router = express.Router();
 let { index, viewCreate, actionCreate, viewEdit, actionEdit, actionDelete, actionStatus } = require("./controller");
-
+const { isLoginAdmin } = require("../middleware/auth");
+/* GET home page. */
+router.use(isLoginAdmin);
 /* GET home page. */
 router.get("/", index);
 router.get("/create", viewCreate);
