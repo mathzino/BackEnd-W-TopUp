@@ -7,7 +7,7 @@ module.exports = {
       let alertStatus = req.flash("alertStatus");
       let alert = { message: alertMessage, status: alertStatus };
 
-      const transaction = await Transaction.find();
+      const transaction = await Transaction.find().populate("player");
       console.log("transaction >>", transaction);
       res.render("admin/transaction/view_transaction", {
         transaction,
@@ -18,6 +18,20 @@ module.exports = {
     } catch (error) {
       req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", `danger`);
+      res.redirect("/transaction");
+    }
+  },
+  actionStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.query;
+      await Transaction.findByIdAndUpdate({ _id: id }, { status });
+      req.flash("allertMessage", "Berhasil ubah status");
+      req.flash("allertStatus", "succsess");
+      res.redirect("/transaction");
+    } catch (error) {
+      req.flash("allertMessage", `${error.message}`);
+      req.flash("allertStatus", "danger");
       res.redirect("/transaction");
     }
   },
