@@ -1,21 +1,25 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var methodOverride = require("method-override");
-var categoryRouter = require("./app/category/router");
-var dashboardRouter = require("./app/dashboard/router");
-var nominalRouter = require("./app/nominal/router");
-var voucherRouter = require("./app/voucher/router");
-var bankRouter = require("./app/bank/router");
-var paymentRouter = require("./app/payment/router");
-var userRouter = require("./app/user/router");
-var transactionRouter = require("./app/transaction/router");
-var session = require("express-session");
-var flash = require("connect-flash");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const methodOverride = require("method-override");
+const categoryRouter = require("./app/category/router");
+const dashboardRouter = require("./app/dashboard/router");
+const nominalRouter = require("./app/nominal/router");
+const voucherRouter = require("./app/voucher/router");
+const bankRouter = require("./app/bank/router");
+const paymentRouter = require("./app/payment/router");
+const userRouter = require("./app/user/router");
+const transactionRouter = require("./app/transaction/router");
+const playerRouter = require("./app/player/router");
+const authRouter = require("./app/auth/router");
 
-var app = express();
+const session = require("express-session");
+const flash = require("connect-flash");
+
+const app = express();
+const URL = `/api/v1`;
 
 // view engine setup
 
@@ -46,6 +50,10 @@ app.use("/voucher", voucherRouter);
 app.use("/bank", bankRouter);
 app.use("/payment", paymentRouter);
 app.use("/transaction", transactionRouter);
+app.use("/auth", authRouter);
+
+// api
+app.use(`${URL}/players`, playerRouter);
 
 console.log(`http://localhost:${8000}`);
 
