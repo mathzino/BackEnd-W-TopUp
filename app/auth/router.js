@@ -3,8 +3,9 @@ var router = express.Router();
 let multer = require("multer");
 let os = require("os");
 
-let { signup } = require("./controller");
+let { signup, signin } = require("./controller");
 
 router.post("/signup", multer({ dest: os.tmpdir() }).single("image"), signup);
+router.post("/signin", signin);
 
 module.exports = router;
