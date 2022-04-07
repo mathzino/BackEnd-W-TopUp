@@ -1,9 +1,10 @@
-const createError = require("http-errors");
+const createError = require("http-errors"); //Create HTTP errors for Express, Koa, Connect, etc. with ease.
 const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
+var cors = require("cors");
+const path = require("path"); //nodejs
+const cookieParser = require("cookie-parser"); //Parse Cookie header and populate req.cookies with an object keyed by the cookie names. Optionally you may enable signed cookie support by passing a secret string, which assigns req.secret so it may be used by other middleware.
 const logger = require("morgan");
-const methodOverride = require("method-override");
+const methodOverride = require("method-override"); //Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
 const categoryRouter = require("./app/category/router");
 const dashboardRouter = require("./app/dashboard/router");
 const nominalRouter = require("./app/nominal/router");
@@ -22,7 +23,7 @@ const app = express();
 const URL = `/api/v1`;
 
 // view engine setup
-
+app.use(cors());
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
