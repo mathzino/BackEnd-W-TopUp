@@ -56,8 +56,6 @@ app.use("/auth", authRouter);
 // api
 app.use(`${URL}/players`, playerRouter);
 
-console.log(`http://localhost:${8000}`);
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
