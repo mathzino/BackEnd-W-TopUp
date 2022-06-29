@@ -1,4 +1,4 @@
-MODE=
-SERVICE_NAME=
-MONGO_URL=
-SECRET=
+MODE=dev
+SERVICE_NAME=bwa-storegg
+MONGO_URL=mongodb+srv://mazino:GdWf7QZaI1WImN0F@cluster0.tvilx.mongodb.net/db_bwa_store_gg?retryWrites=true&w=majority
+SECRET=SECRET
