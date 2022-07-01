@@ -9,8 +9,11 @@ module.exports = {
   signup: async (req, res, next) => {
     try {
       const payload = req.body;
+      console.log(payload);
       if (req.file) {
+        console.log(req.file);
         let tmp_path = req.file.path;
+
         let originaExt = req.file.originalname.split(".")[req.file.originalname.split(".").length - 1];
         let fileName = req.file.filename + "." + originaExt;
         let target_path = path.resolve(config.rootPath, `public/uploads/${fileName}`);
